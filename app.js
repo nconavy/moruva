@@ -9,7 +9,7 @@ $('#sound-toggle').onclick=()=>{sound=!sound;$('#sound-toggle').setAttribute('ar
 $('#fullscreen-toggle').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{notify('브라우저의 전체 화면 기능을 이용해 주세요.');}};
 $('#menu-toggle').onclick=()=>{const open=$('.nav').classList.toggle('menu-open');$('#menu-toggle').setAttribute('aria-expanded',open);$('#menu-toggle').setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');};
 function closeMenu(){$('.nav').classList.remove('menu-open');$('#menu-toggle').setAttribute('aria-expanded','false');$('#menu-toggle').setAttribute('aria-label','메뉴 열기');}
-function parseRoute(){const [raw,num]=location.hash.slice(1).split('/');const alias={cast:'friends',episodes:'chapters',play:'cards'};const name=alias[raw]||raw||'home';return{name:$(`[data-route="${CSS.escape(name)}"]`)?name:'home',index:Math.max(0,Math.min(chapters.length-1,(Number(num)||1)-1))};}
+function parseRoute(){const [raw,num]=location.hash.slice(1).split('/');const alias={cast:'friends',episodes:'chapters',play:'games'};const name=alias[raw]||raw||'home';return{name:$(`[data-route="${CSS.escape(name)}"]`)?name:'home',index:Math.max(0,Math.min(chapters.length-1,(Number(num)||1)-1))};}
 function leavePage(){homeMotion?.pause();storyMotion?.kill();$('#story-video').pause();}
 function preparePage(name){
  const p=$(`[data-route="${name}"]`);gsap.killTweensOf(p);gsap.set(p,{opacity:1,scale:1});
@@ -43,7 +43,7 @@ async function navigate(name,index=chapter,historyMode='push',initial=false){
   document.body.dataset.page=name;
   $$('.nav nav a').forEach(a=>{if(a.hash==='#'+(name==='story'?'chapters':name))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   MoruFX.theme(name,name==='friends'?friends[friend].color:undefined);
-  $('#scene-announcement').textContent=({home:'첫 화면',chapters:'장면 선택',story:chapters[chapter].name,friends:'친구 소개',objects:'오브젝트',cards:'카드팩'})[name];
+  $('#scene-announcement').textContent=({home:'첫 화면',chapters:'장면 선택',story:chapters[chapter].name,friends:'친구 소개',objects:'오브젝트',cards:'카드팩',games:'놀이터'})[name];
   preparePage(name);await MoruLoad.paint(name);
   if(historyMode==='push')history.pushState(null,'','#'+name+(name==='story'?'/'+(chapter+1):''));
  };

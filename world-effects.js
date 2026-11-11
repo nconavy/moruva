@@ -1,6 +1,6 @@
 (()=>{'use strict';
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const palettes={home:['#f5edda','#dfc68b'],chapters:['#285345','#e9b064'],friends:['#cad7b4','#e9cf9e'],objects:['#c0b6d4','#e5c7a2'],cards:['#153b32','#cbad69'],play:['#a9b8cb','#e2cb9c'],story:['#acbca1','#ead5ae']};
+const palettes={games:['#e9d9bc','#c1d3ba'],home:['#f5edda','#dfc68b'],chapters:['#285345','#e9b064'],friends:['#cad7b4','#e9cf9e'],objects:['#c0b6d4','#e5c7a2'],cards:['#153b32','#cbad69'],play:['#a9b8cb','#e2cb9c'],story:['#acbca1','#ead5ae']};
 const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);
 const state={r:.61,g:.608,b:.82,ar:.71,ag:.69,ab:.875,t:0,px:.5,py:.5,tx:.5,ty:.5,pulse:0,mode:0,scene:0};
 const vertex='attribute vec2 position; varying vec2 vUv;void main(){vUv=position*.5+.5;gl_Position=vec4(position,0.,1.);}';
