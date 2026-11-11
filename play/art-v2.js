@@ -1,7 +1,7 @@
 // MORUVA artwork, second edition. All artwork is drawn locally from shapes.
 // Existing coordinates and wardrobe IDs are deliberately preserved.
-import {COLORS,ellipse,round,star,flower,line,shape} from './art.js';
-export {COLORS,ellipse,round,star,flower,line,shape} from './art.js';
+import {COLORS,ellipse,round,star,flower,line,shape} from './art.js?v=20261112-game4';
+export {COLORS,ellipse,round,star,flower,line,shape} from './art.js?v=20261112-game4';
 const INK='#725240',SKIN='#ffe5bd';
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const mod=(v,m)=>(v%m+m)%m;

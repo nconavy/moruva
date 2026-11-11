@@ -1,5 +1,5 @@
-import {ellipse,shape,line,star,flower,round} from './art.js';
-import {clamp} from './core.js';
+import {ellipse,shape,line,star,flower,round} from './art.js?v=20261112-game4';
+import {clamp} from './core.js?v=20261112-game4';
 function blend(a,b,t){const aa=parseInt(a.slice(1),16),bb=parseInt(b.slice(1),16);return'#'+[16,8,0].map(s=>Math.round(((aa>>s)&255)*(1-t)+((bb>>s)&255)*t).toString(16).padStart(2,'0')).join('');}
 function cloud(c,x,y,size,opacity=.8){c.save();c.translate(x,y);c.scale(size,size);c.globalAlpha=opacity;const g=c.createLinearGradient(0,-25,0,18);g.addColorStop(0,'#fffdf1');g.addColorStop(1,'#dbe9df');ellipse(c,0,2,54,14,g);ellipse(c,-25,-6,24,18,g);ellipse(c,4,-15,29,25,g);ellipse(c,34,-3,21,16,g);ellipse(c,-2,-18,22,16,'#fffdf033');c.restore();}
 function island(c,x,y,s,tint,t){c.save();c.translate(x,y);c.scale(s,s);shape(c,'M-85 0 Q-50 18 -28 64 L-2 106 L22 65 Q38 24 76 1 Z',tint,null);shape(c,'M-58 10 L-25 62 L-4 103 L-15 31 L13 11 Z','#ffffff14',null);shape(c,'M25 11 L18 61 L0 104 L34 48 L66 9 Z','#183d3d22',null);ellipse(c,-3,-1,81,15,'#769e89');ellipse(c,-12,-6,62,9,'#a2bb94');shape(c,'M-12 -7 Q-4 5 -1 50 Q2 69 -3 89 Q8 63 9 43 Q8 8 21 -6 Z','#d8efe5bb',null);line(c,4,12,6,59,'#effaf4aa',2);for(let i=0;i<4;i++){const xx=-51+i*32;line(c,xx,-5,xx+Math.sin(t+i)*2,-16,'#739568',2);flower(c,xx+Math.sin(t+i)*2,-17,3,'#fff2cf');}c.restore();}

@@ -28,7 +28,7 @@ async function retry(ui,work,{initial=false}={}){
 const labels={games:'놀이터를 준비하는 중',home:'친구들을 만나러 가는 중',chapters:'장면을 준비하는 중',friends:'친구들을 준비하는 중',objects:'오브젝트를 준비하는 중',cards:'카드팩을 준비하는 중',story:'영상을 준비하는 중'};
 function sources(name,index){
  const logos=['assets/moruva-logo.svg','assets/moruva-logo-cream.svg'];
- if(name==='games')return logos.concat(['jump','dress','run'].map(s=>`assets/game-${s}.jpg`));
+ if(name==='games')return logos.concat(['jump','dress','run'].map(s=>`assets/game-${s}-v4.jpg`));
  if(name==='home')return logos.concat(['hero-camera-sharp.png','branch-large-a.svg','branch-large-b.svg','branch-large-c.svg','sprig-a.svg','sprig-b.svg'].map(s=>'assets/'+s));
  if(name==='chapters'||name==='story')return logos.concat(window.MoruShots.map(s=>'assets/'+s.image));
  if(name==='friends')return logos.concat(names.map(s=>`assets/motion-${s}.webp`));

@@ -1,5 +1,5 @@
-import {defaultLook,wardrobeMissions,missionComplete,StyleChallenge,styleDifficulty} from './core.js';
-import {drawNari,wardrobeBackground,COLORS,flower,drawWardrobeItem} from './painted-art.js';
+import {defaultLook,wardrobeMissions,missionComplete,StyleChallenge,styleDifficulty} from './core.js?v=20261112-game4';
+import {drawNari,wardrobeBackground,COLORS,flower,drawWardrobeItem} from './painted-art.js?v=20261112-game4';
 export const wardrobeOptions={dress:{label:'의상',icon:'♧',items:['숲의 원피스','피크닉 원피스','하늘 세일러','별빛 드레스','노란 우비','베리 카디건','작은 탐험가','꽃무늬 원피스']},color:{label:'색상',icon:'◉',items:['기본 색','허니','스카이','라일락','테라코타','로즈','포레스트','오트밀']},hat:{label:'머리',icon:'⌒',items:['리본만','밀짚모자','베레모','꽃 화관']},shoes:{label:'신발',icon:'♧',items:['맨발','장화','메리제인','운동화']},prop:{label:'소품',icon:'✦',items:['가볍게','꽃다발','이야기책','탐험 가방','별 지팡이']},background:{label:'배경',icon:'▧',items:['오후의 정원','작은 스튜디오','노을빛 언덕','고요한 별밤']}};
 export function drawLook(canvas,look,t=0){const c=canvas.getContext('2d'),w=canvas.width,h=canvas.height;wardrobeBackground(c,w,h,look.background,t);drawNari(c,w/2,h*.895,h*.72,t,look);}
 export function downloadBlob(blob,name){const a=document.createElement('a');const url=URL.createObjectURL(blob);a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);}
