@@ -1,0 +1,7 @@
+GSAP 3.15.1
+Copyright (c) GSAP / GreenSock. All rights reserved.
+Official npm package: https://www.npmjs.com/package/gsap
+Source tarball: https://registry.npmjs.org/gsap/-/gsap-3.15.1.tgz
+License: Standard 'no charge' license: https://gsap.com/standard-license/
+Included unmodified browser distributions: gsap.min.js, ScrollTrigger.min.js, Draggable.min.js, InertiaPlugin.min.js.
+Copyright/license headers in the distributions are retained. This dependency is not represented as MIT-licensed open source.

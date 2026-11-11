@@ -1,0 +1,41 @@
+:root{--ink:#263c33;--cream:#fff2d7}
+.nav{top:22px}.nav nav{gap:16px}.nav nav a{font-size:11px}.brand{width:125px}
+.home-title{top:11.5vh;width:min(58vw,820px);z-index:4}.home-title span{display:none}
+.home-portal,.note-a,.note-b,.note-c,.foreground,.corner-label{display:none}
+.garden-scene{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.garden-mask{position:absolute;left:50%;top:44%;width:118vw;height:131vh;transform:translate(-50%,-50%);transform-origin:50% 60%;filter:drop-shadow(0 2px 0 #344330)}
+.garden-mask>svg{width:100%;height:100%;overflow:visible}
+.garden-sky{position:absolute;inset:0;z-index:2;overflow:hidden}
+.sky-cloud{position:absolute;width:26vw;color:#f7cebc;opacity:.9;filter:drop-shadow(0 2px 0 #87594055)}
+.sky-cloud.a{left:-7vw;top:23vh;rotate:-8deg}.sky-cloud.b{right:-7vw;top:40vh;rotate:6deg;width:31vw}.sky-cloud.c{right:17vw;top:23vh;width:13vw;opacity:.65}
+.sky-sun{position:absolute;left:10vw;top:39vh;width:8vw;height:8vw;color:#fff1d2}
+.garden-hills{position:absolute;bottom:7vh;left:-4vw;width:108vw;height:44vh;z-index:2}
+.garden-hills path{stroke:#435b43;stroke-width:1.1}
+.garden-ground{position:absolute;bottom:-11vh;left:-10%;width:120%;height:33vh;background:#e6b482;border-top:2px solid #704f3930;border-radius:50% 50% 0 0;z-index:3}
+.group-scene{width:min(80vw,1180px);height:70vh;bottom:4vh;z-index:5}
+.hero-live{position:absolute;bottom:0;left:50%;transform:translateX(-50%);pointer-events:none}
+.garden-front{position:absolute;bottom:-1px;left:0;width:100%;height:27vh;pointer-events:none;z-index:7}
+.garden-front>svg{width:100%;height:100%;overflow:visible}
+.garden-stalk{transform-box:fill-box}
+.scene-seal{position:absolute;z-index:7;right:7vw;top:24vh;width:132px;height:132px;rotate:14deg;color:var(--cream);transition:scale .3s}
+.scene-seal:hover{scale:1.09}.scene-seal svg{width:100%;height:100%}.scene-seal .seal-type{transform-box:fill-box;transform-origin:center}.scene-seal text{fill:currentColor;font-size:10.5px;font-weight:800;letter-spacing:2px}
+.enter-button{bottom:5.5vh;padding:18px 31px;gap:48px;font-size:20px;box-shadow:none;border:1px solid #fff2d73b;transition:background .25s,box-shadow .25s}.enter-button:hover{background:#b84935;box-shadow:0 8px 0 #263c3329}
+.camera-hit{left:37%;top:72%;width:15%;height:15%}.camera-hit i{opacity:.9;width:30px;height:30px;background:#263c3366;font-size:19px;position:absolute;left:15%;top:25%}.camera-hit span{top:0}
+.home .site-tools{color:var(--cream)}
+.cover{width:min(38vw,44vh,440px)}.cover-deck{inset:20vh 0 22vh}.cover-title{font-size:clamp(23px,2.8vw,41px);bottom:auto;top:41px;left:19px;line-height:.95;letter-spacing:-.07em;max-width:80%;color:#294233;pointer-events:none}.cover-label{top:17px;left:20px;font-size:8px}.cover-image{height:70%;position:absolute;bottom:0;object-position:50% 80%}.cover-face{box-shadow:inset 7px 0 12px #263c3314,0 22px 35px -24px #172c3999;border-radius:2px}.cover-stamp{top:auto;bottom:12px;right:13px;width:52px;height:52px;font-size:8px;background:#fff2d7ad;z-index:4}.deck-controls{bottom:22vh}.player-pill{bottom:9vh;padding:17px 25px;min-width:310px}.record-orbit{opacity:.4}
+.page-label{top:13vh}.page-label h2{font-size:clamp(32px,3.4vw,56px)}
+.object-deck .cover-image{height:100%;inset:0}.object-deck .cover{width:min(51vw,78vh,690px)}.object-deck{inset:20vh 0 24vh}.object-caption{bottom:10vh}.object-caption h3{font-size:27px;margin:10px 0 16px}
+.friend-ghost{font-size:24vw;top:28vh;left:50%;transform:translateX(-50%);opacity:.09;letter-spacing:-.08em}.friend-art{height:64vh;bottom:17vh;left:11%;width:48vw}.friend-copy{left:66%;top:38%}.friend-floor{bottom:16vh}.friend-tabs{bottom:7vh}.friend-tabs button{border-radius:7px;padding:14px 24px;rotate:-2deg;box-shadow:2px 4px 0 #263c3311}.friend-tabs button:nth-child(even){rotate:2deg}
+.play #physics-stage{inset:25vh 6vw 18vh;border:0;background:radial-gradient(ellipse at 50% 95%,#fff2d77a,transparent 70%)}
+.play::before{content:'OFF THE PAGE';position:absolute;left:50%;top:28%;transform:translateX(-50%) rotate(-6deg);width:100%;text-align:center;font-size:14vw;font-weight:1000;letter-spacing:-.08em;line-height:.85;color:#fff2d77d;pointer-events:none}
+.physics-sticker{border-radius:7px;padding:13px;box-shadow:0 10px 20px #243c3320}.physics-sticker:nth-child(3n){background:#f7d8b1}.physics-sticker:nth-child(3n + 1){background:#e5e7c5}.physics-sticker span{font-size:11px}
+.pack-halo{border:1px solid #fff2d7aa;background:repeating-radial-gradient(circle,transparent 0 40px,#fff2d738 41px 42px);animation:halo-pulse 6s ease-in-out infinite alternate}.foil-pack{box-shadow:14px 25px 40px #563b3433}.cards::after{content:'SERIES 01';position:absolute;top:31%;left:50%;transform:translateX(-50%) rotate(-7deg);white-space:nowrap;font-size:19vw;font-weight:1000;letter-spacing:-.08em;opacity:.07;pointer-events:none;z-index:-1}
+.story-frame{inset:15vh 12vw 15vh;box-shadow:0 20px 80px #203d3420;border:12px solid #fff2d7;border-bottom-width:38px;rotate:-1deg}.story-copy{left:5vw;top:18vh;max-width:19vw;z-index:11}.story-copy h2{font-size:clamp(30px,4.2vw,60px);text-shadow:2px 2px 0 #fff2d7, -2px -2px 0 #fff2d7}.story-controller{bottom:5.5vh}.story-hint{bottom:2vh}
+.loader-mark{width:140px;height:140px}.loader-mark svg{width:88px}.loader-mark span{inset:-13px}.load-line{margin-top:27px;width:180px}#loader>img{display:none}#loader small{font-size:10px}#load-count{position:absolute;bottom:12vh}
+@keyframes halo-pulse{to{transform:translate(-50%,-50%) scale(1.06);opacity:.7}}
+@media(min-width:1700px){.home-title{width:58vw;max-width:1000px}.group-scene{width:min(80vw,1500px);height:71vh}.cover{width:min(36vw,45vh,570px)}}
+@media(max-width:800px){.nav{top:20px}.brand{width:100px}.home-title{top:13vh;width:87vw}.garden-mask{width:186vw;height:115vh;top:45%}.sky-cloud.a{left:-12vw;top:30vh;width:43vw}.sky-cloud.b{right:-10vw;top:42vh;width:43vw}.sky-cloud.c{display:none}.sky-sun{left:12vw;top:36vh;width:17vw;height:17vw}.garden-hills{bottom:23vh;height:30vh;width:130vw;left:-15vw}.garden-ground{bottom:-3vh;height:39vh;width:180%;left:-40%}.group-scene{width:103vw;height:calc(103vw / 1.5);max-height:53vh;bottom:22vh;left:50%}.garden-front{height:31vh}.scene-seal{right:6vw;top:31vh;width:80px;height:80px}.enter-button{bottom:12vh;padding:17px 27px;font-size:18px;gap:38px}.camera-hit i{width:20px;height:20px;font-size:13px;box-shadow:0 0 0 4px #fff2d730}.camera-hit span{display:none}.home-title{max-width:none}.page-label{top:13vh}.page-label h2{font-size:32px}.cover-deck{inset:28vh 0 27vh}.cover{width:min(73vw,39vh);max-width:380px}.cover-title{font-size:31px;top:34px;left:17px}.cover-label{font-size:7px;top:13px;left:17px}.cover-stamp{width:45px;height:45px;font-size:7px}.deck-controls{bottom:23vh}.player-pill{bottom:11vh;min-width:280px}.object-deck{inset:27vh 0 30vh}.object-deck .cover{width:85vw}.object-caption{bottom:14vh}.object-caption h3{font-size:23px}.friend-art{left:-4%;width:70vw;height:48vh;bottom:28vh}.friend-copy{left:64%;top:39%;max-width:33vw}.friend-copy h3{font-size:40px}.friend-floor{bottom:25vh}.friend-tabs{bottom:12vh}.friend-tabs button{padding:10px 15px}.friend-ghost{top:30vh;font-size:35vw}.play #physics-stage{inset:27vh 3vw 25vh}.play::before{font-size:25vw;top:31vh;line-height:.9;white-space:normal}.physics-sticker{padding:8px}.physics-sticker span{font-size:8px}.story-frame{inset:28vh 3vw 26vh;border-width:7px;border-bottom-width:24px}.story-copy{left:7vw;top:14vh;max-width:85vw}.story-copy h2{font-size:37px}.story-controller{bottom:12vh}.story-hint{bottom:8vh}.scene-hint{font-size:8px}}
+@media(max-height:740px) and (max-width:800px){.home-title{top:14vh;width:77vw}.group-scene{bottom:19vh;max-height:55vh;width:105vw}.scene-seal{top:29vh;width:65px;height:65px}.enter-button{bottom:9vh;padding:13px 24px}.sky-sun{top:35vh}.cover{width:min(68vw,37vh)}.player-pill{bottom:10vh;padding:13px 22px}.cover-title{font-size:25px}.deck-controls{bottom:21vh}.scene-hint{bottom:5vh}}
+@media(prefers-reduced-motion:reduce){.pack-halo{animation:none}}
+
+.home,.story,.friends{touch-action:none}
