@@ -2,7 +2,7 @@
 const castNames=['moru','nari','tori','luan','dodam','neuru'];
 const castExposure=[.24,.13,.18,.10,.12,.22,.12,.16,.16,.24,.32,.30];
 let castTimeline,castRun=0;
-const castImages=castNames.map(n=>{const im=new Image();im.src=`assets/motion-${n}.webp`;return im;});
+const castImages=castNames.map(n=>({decode:()=>MoruLoad.image(`assets/motion-${n}.webp`)}));
 function castSprite(i){const clip='cast-frame-'+i;return `<svg class="motion-sprite" viewBox="0 0 362 362" preserveAspectRatio="xMidYMax meet" overflow="hidden" data-character="${i}" data-frame="0" role="img" aria-label="${friends[i].name}의 연속 동작"><defs><clipPath id="${clip}" clipPathUnits="userSpaceOnUse"><rect x="0" y="0" width="362" height="362"/></clipPath></defs><g clip-path="url(#${clip})"><image class="sprite-image" href="assets/motion-${castNames[i]}.webp" width="1448" height="1086" x="0" y="0"/></g></svg>`;}
 function castFrame(el,n){if(!el)return;el.dataset.frame=n;el.querySelector('image').setAttribute('x',-(n%4)*362);el.querySelector('image').setAttribute('y',-Math.floor(n/4)*362);}
 let castPending=false;

@@ -1,0 +1,29 @@
+html,body{background:#f5edda}
+.home{background:#f5edda;contain:layout paint}
+body[data-page=home] #world-fx{visibility:hidden}
+.botanical-stage{isolation:isolate;contain:layout paint;background:#f5edda}
+.studio-aperture{contain:paint;will-change:transform;backface-visibility:hidden}
+.studio-light,.ambient-bloom{mix-blend-mode:normal;pointer-events:none}
+.studio-light{opacity:.17;contain:paint}
+.ambient-bloom{opacity:.18!important;background:radial-gradient(ellipse at 30% 30%,#fff8d840,transparent 38%);contain:paint}
+.home-title{filter:none;contain:layout style}
+.group-scene{filter:none}
+.hero-live{will-change:transform}
+body[data-route-state=transitioning] #ambient-details{visibility:hidden}
+body:not([data-loader-state=ready]) .botanical-stage *,body[data-route-state=transitioning] .botanical-stage *{animation-play-state:paused!important}
+#transition[data-covered=true]{background:#214d40}
+#transition .route-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;z-index:3;color:#fff2d7;opacity:0;pointer-events:none}
+#transition .route-loader[data-visible=true]{opacity:1;pointer-events:auto}
+.loading-orbit{position:relative;width:94px;height:94px;display:grid;place-items:center}
+.loading-orbit>b{font-size:49px;line-height:1;letter-spacing:-.09em;font-weight:800;translate:-3px -4px}
+.loading-orbit>i{position:absolute;inset:0;border:1px solid #fff2d733;border-top:3px solid #efc97f;border-radius:50%;animation:spin 1.4s linear infinite}
+.loading-label{font-size:11px;letter-spacing:.05em}
+.loading-track{width:150px;height:2px;background:#fff2d726;overflow:hidden}
+.loading-track>i{display:block;height:100%;background:#efc97f;transform:scaleX(0);transform-origin:left;transition:transform .15s linear}
+#transition .route-loader .loading-count{position:static;transform:none;font-size:11px;letter-spacing:.05em;font-weight:500;opacity:.65;color:inherit}
+.loading-actions{display:flex;gap:12px;margin-top:10px}.loading-actions button{font-size:12px;border:1px solid currentColor;border-radius:99px;padding:10px 18px}
+.load-failed .loading-orbit>i,.load-failed .loader-mark span{animation-play-state:paused}
+.film-wait{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:#183e35;color:#fff2d7;border-radius:inherit}
+.film-wait[hidden]{display:none}.film-wait .loading-orbit{width:64px;height:64px}.film-wait .loading-orbit>b{font-size:35px}.film-wait small{font-size:11px}.film-wait button{font-size:12px;border:1px solid #fff2d777;border-radius:99px;padding:9px 16px}
+body[data-page=home][data-loader-state=ready] .botanical-stage{--stable-background:1}
+@media(prefers-reduced-motion:reduce){.loading-orbit>i{animation-duration:3s}}

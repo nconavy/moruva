@@ -2,6 +2,13 @@
 const shots=window.MoruShots,names=['moru','nari','tori','luan','dodam','neuru'];
 const video=$('#story-video'),image=$('#story-image'),play=$('#story-play'),bar=$('.shot-progress i'),badge=$('.shot-badge');
 const dialog=$('#film-dialog'),player=$('#film-player');let selected=-1,ending=false,pendingPlay=false,sequence=false,advanceTimer,run=0,modalRun=0,modalEnding=false,modalShot=null;
+function waitingLayer(parent){const el=document.createElement('div');el.className='film-wait';el.hidden=true;el.setAttribute('role','status');el.innerHTML='<div class="loading-orbit" aria-hidden="true"><i></i><b>m.</b></div><small>영상을 준비하는 중</small><button type="button" hidden>다시 불러오기 ↻</button>';parent.append(el);return el;}
+const filmWait=waitingLayer($('#story-frame')),modalWait=waitingLayer($('.film-stage'));
+function showWait(el,error=false){el.hidden=false;el.querySelector('small').textContent=error?'영상을 불러오지 못했어요':'영상을 준비하는 중';el.querySelector('button').hidden=!error;el.querySelector('.loading-orbit').hidden=error;}
+function hideWait(el){el.hidden=true;}
+function showLoadError(){showWait(filmWait,true);state('unavailable');pendingPlay=false;}
+filmWait.querySelector('button').onclick=async()=>{try{selected=-1;await prepare('story',chapter);playStory();}catch{showLoadError();}};
+modalWait.querySelector('button').onclick=()=>openFilm(modalShot);
 function makeSlate(parent,modal){const el=document.createElement('div');el.className='film-finish';el.hidden=true;el.innerHTML=`<i class="closing-shutter shutter-top"></i><i class="closing-shutter shutter-bottom"></i><div class="finish-content"><small class="finish-index"></small><img src="assets/moruva-logo.svg" alt="MORUVA" class="finish-logo"><p class="finish-name"></p><div><button class="finish-replay">다시 보기 ↻</button><button class="finish-next">${modal?'닫기 ×':'다음 장면 →'}</button></div></div>`;parent.append(el);return el;}
 for(const parent of [$('#story-frame'),$('.film-stage')]){const mark=document.createElement('span');mark.className='ai-film-mark';mark.textContent='샘플 ai제작 영상';parent.append(mark);}
 const slate=makeSlate($('#story-frame'),false),modalSlate=makeSlate($('.film-stage'),true);
@@ -13,27 +20,39 @@ function updateStrip(){const strip=$('#shot-strip');strip.querySelectorAll('butt
 $('#shot-strip').innerHTML=shots.map((s,i)=>`<button data-shot="${i}" aria-label="${i+1}. ${s.name}" aria-current="false"><img src="assets/${s.image}" alt="" loading="lazy"><span>${String(i+1).padStart(2,'0')} · ${s.name}</span></button>`).join('');
 $$('[data-shot]').forEach(b=>b.onclick=()=>{if(busy)return;setSequence(false);const i=+b.dataset.shot;if(current==='story'&&i===selected)playStory();else navigate('story',i);});
 function select(index){const shot=shots[index];if(!shot)return;clearTimeout(advanceTimer);if(selected!==index){run++;video.pause();selected=index;ending=false;pendingPlay=false;resetSlate(slate);video.poster='assets/'+shot.image;video.src='assets/'+shot.base+shot.id+'.mp4';video.preload='auto';video.load();bar.style.transform='scaleX(0)';}badge.textContent=`${String(index+1).padStart(2,'0')} / ${shot.name}`;image.src='assets/'+shot.image;image.alt=shot.caption;video.hidden=video.readyState<2;image.hidden=!video.hidden;state('ready');updateStrip();}
-video.addEventListener('loadeddata',()=>{if(selected<0||ending)return;video.hidden=false;image.hidden=true;if(pendingPlay)playStory();});
-video.addEventListener('error',()=>{pendingPlay=false;setSequence(false);ending=true;closeFrame(slate,'영상을 불러오지 못했어요','MORUVA / FILM',()=>{video.hidden=true;image.hidden=true;state('unavailable');});});
+video.addEventListener('loadeddata',()=>{if(selected<0||ending)return;video.hidden=false;image.hidden=true;});
+video.addEventListener('error',()=>{pendingPlay=false;setSequence(false);showLoadError();});
 function finishStory(){if(ending||selected<0)return;ending=true;const token=run,idx=selected;state('closing');const next=slate.querySelector('.finish-next');next.textContent=idx===shots.length-1?'장면 목록 ↗':'다음 장면 →';closeFrame(slate,shots[idx].name,`${String(idx+1).padStart(2,'0')} / ${String(shots.length).padStart(2,'0')} · END`,()=>{if(token!==run)return;video.pause();video.hidden=true;image.hidden=true;bar.style.transform='scaleX(1)';state('ended');if(sequence){if(idx===shots.length-1){setSequence(false);}else advanceTimer=setTimeout(()=>{if(sequence&&current==='story'&&selected===idx&&!busy)navigate('story',idx+1);},750);}});}
 function watch(v,fn){if('requestVideoFrameCallback'in v){const tick=()=>{if(!v.paused&&!v.ended)fn(v.currentTime);v.requestVideoFrameCallback(tick);};v.requestVideoFrameCallback(tick);}else{const tick=()=>{if(!document.hidden&&!v.paused&&!v.ended)fn(v.currentTime);requestAnimationFrame(tick);};requestAnimationFrame(tick);}}
 watch(video,time=>{const s=shots[selected];if(!s||ending)return;const end=Math.min(video.duration||s.end,s.end);bar.style.transform=`scaleX(${Math.min(1,(time-(s.start||0))/(end-(s.start||0)))})`;if(time>=end-.4)finishStory();});
 video.addEventListener('ended',finishStory);
-function playStory(){if(selected<0)return;clearTimeout(advanceTimer);if(video.readyState<2){pendingPlay=true;state('loading');return;}run++;ending=false;pendingPlay=false;resetSlate(slate);video.currentTime=shots[selected].start||0;video.muted=true;video.hidden=false;image.hidden=true;video.play().then(()=>state('playing')).catch(()=>state('paused'));}
-play.onclick=()=>{if(selected<0)return;if(ending||video.ended){playStory();return;}if(video.paused){video.play().then(()=>state('playing')).catch(()=>state('paused'));}else{setSequence(false);video.pause();state('paused');}};
+function playStory(){if(selected<0)return;clearTimeout(advanceTimer);if(video.readyState<2){pendingPlay=true;state('loading');return;}run++;ending=false;pendingPlay=false;resetSlate(slate);if(Math.abs(video.currentTime-(shots[selected].start||0))>.03)video.currentTime=shots[selected].start||0;video.muted=true;video.hidden=false;image.hidden=true;video.play().then(()=>{hideWait(filmWait);state('playing');}).catch(()=>state('paused'));}
+play.onclick=()=>{if(selected<0)return;if(ending||video.ended){playStory();return;}if(video.paused){video.play().then(()=>{hideWait(filmWait);state('playing');}).catch(()=>state('paused'));}else{setSequence(false);video.pause();state('paused');}};
 slate.querySelector('.finish-replay').onclick=()=>{setSequence(false);playStory();};slate.querySelector('.finish-next').onclick=()=>{setSequence(false);selected===shots.length-1?navigate('chapters'):navigate('story',selected+1);};
-$('#story-sequence').onclick=()=>{setSequence(!sequence);if(sequence&&ending){selected===shots.length-1?navigate('story',0):navigate('story',selected+1);}else if(sequence&&video.paused)video.play().then(()=>state('playing')).catch(()=>{});};
+$('#story-sequence').onclick=()=>{setSequence(!sequence);if(sequence&&ending){selected===shots.length-1?navigate('story',0):navigate('story',selected+1);}else if(sequence&&video.paused)video.play().then(()=>{hideWait(filmWait);state('playing');}).catch(()=>{});};
 $('#chapters-play-all').onclick=()=>{setSequence(true);navigate('story',0);};
-async function prepare(name,index){clearTimeout(advanceTimer);if(name!=='story'){run++;video.pause();pendingPlay=false;setSequence(false);return;}select(index);if(video.readyState>=2)return;await new Promise(resolve=>{let timer;const done=()=>{clearTimeout(timer);video.removeEventListener('loadeddata',done);video.removeEventListener('error',done);resolve();};video.addEventListener('loadeddata',done,{once:true});video.addEventListener('error',done,{once:true});timer=setTimeout(done,2500);});}
+async function prepare(name,index){
+ clearTimeout(advanceTimer);if(name!=='story'){run++;video.pause();pendingPlay=false;setSequence(false);hideWait(filmWait);return;}
+ showWait(filmWait);if(video.error)selected=-1;select(index);const shot=shots[index];
+ try{await MoruLoad.videoReady(video,shot.start||0,shot.end);await MoruLoad.frames(2);}
+ catch(error){showLoadError();throw error;}
+}
 function finishModal(){if(modalEnding||!modalShot)return;modalEnding=true;const token=modalRun;closeFrame(modalSlate,modalShot.name,'MORUVA / FIN',()=>{if(token!==modalRun)return;player.pause();player.hidden=true;dialog.dataset.filmState='ended';});}
 function replayModal(){modalRun++;modalEnding=false;resetSlate(modalSlate);player.hidden=false;player.currentTime=modalShot.start||0;player.play().then(()=>dialog.dataset.filmState='playing').catch(()=>{});}
-function openFilm(shot){video.pause();setSequence(false);pendingPlay=false;modalRun++;modalEnding=false;modalShot=shot;resetSlate(modalSlate);player.pause();player.hidden=false;player.src='assets/'+shot.base+shot.id+'.mp4';player.poster='assets/'+shot.image;player.muted=true;$('#film-title').textContent=shot.name;openDialog('#film-dialog');player.play().then(()=>dialog.dataset.filmState='playing').catch(()=>{});}
+async function openFilm(shot){
+ video.pause();setSequence(false);pendingPlay=false;const token=++modalRun;modalEnding=false;modalShot=shot;resetSlate(modalSlate);player.pause();player.hidden=false;showWait(modalWait);
+ player.src='assets/'+shot.base+shot.id+'.mp4';player.poster='assets/'+shot.image;player.preload='auto';player.muted=true;$('#film-title').textContent=shot.name;
+ if(!dialog.open)openDialog('#film-dialog');player.load();
+ try{await MoruLoad.videoReady(player,shot.start||0,Math.min(shot.end,(shot.start||0)+4));if(token!==modalRun||!dialog.open)return;if(Math.abs(player.currentTime-(shot.start||0))>.03)player.currentTime=shot.start||0;await player.play();hideWait(modalWait);dialog.dataset.filmState='playing';}
+ catch{if(token===modalRun&&dialog.open){showWait(modalWait,true);dialog.dataset.filmState='unavailable';}}
+}
 watch(player,time=>{if(modalShot&&!modalEnding&&time>=Math.min(player.duration||modalShot.end,modalShot.end)-.4)finishModal();});player.addEventListener('ended',finishModal);
 modalSlate.querySelector('.finish-replay').onclick=replayModal;modalSlate.querySelector('.finish-next').onclick=()=>dialog.close();
 $('#home-film').onclick=()=>openFilm({id:'trailer',base:'film-',image:'film-trailer.jpg',end:24.542,name:'여섯 친구의 하루'});
 $('#friend-film').onclick=()=>openFilm(shots.find(s=>s.id===names[friend]));
-dialog.addEventListener('close',()=>{modalRun++;player.pause();resetSlate(modalSlate);});
+dialog.addEventListener('close',()=>{modalRun++;player.pause();resetSlate(modalSlate);hideWait(modalWait);});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){setSequence(false);video.pause();player.pause();if(!ending&&current==='story')state('paused');}});
 document.addEventListener('moru:entered',e=>{if(e.detail==='story')updateStrip();});
-window.MoruFilms={prepare,select,playStory};
+for(const [v,el] of [[video,filmWait],[player,modalWait]]){v.addEventListener('waiting',()=>showWait(el));v.addEventListener('playing',()=>hideWait(el));}
+window.MoruFilms={prepare,select,playStory,showLoadError};
 })();
