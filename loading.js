@@ -29,7 +29,7 @@ const labels={games:'놀이터를 준비하는 중',home:'친구들을 만나러
 function sources(name,index){
  const logos=['assets/moruva-logo.svg','assets/moruva-logo-cream.svg'];
  if(name==='games')return logos.concat(['jump','dress','run'].map(s=>`assets/game-${s}.jpg`));
- if(name==='home')return logos.concat(['hero-camera.png','branch-large-a.svg','branch-large-b.svg','branch-large-c.svg','sprig-a.svg','sprig-b.svg'].map(s=>'assets/'+s));
+ if(name==='home')return logos.concat(['hero-camera-sharp.png','branch-large-a.svg','branch-large-b.svg','branch-large-c.svg','sprig-a.svg','sprig-b.svg'].map(s=>'assets/'+s));
  if(name==='chapters'||name==='story')return logos.concat(window.MoruShots.map(s=>'assets/'+s.image));
  if(name==='friends')return logos.concat(names.map(s=>`assets/motion-${s}.webp`));
  if(name==='objects')return logos.concat(products.map(p=>'assets/'+p.image));

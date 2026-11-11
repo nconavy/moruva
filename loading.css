@@ -27,3 +27,7 @@ body:not([data-loader-state=ready]) .botanical-stage *,body[data-route-state=tra
 .film-wait[hidden]{display:none}.film-wait .loading-orbit{width:64px;height:64px}.film-wait .loading-orbit>b{font-size:35px}.film-wait small{font-size:11px}.film-wait button{font-size:12px;border:1px solid #fff2d777;border-radius:99px;padding:9px 16px}
 body[data-page=home][data-loader-state=ready] .botanical-stage{--stable-background:1}
 @media(prefers-reduced-motion:reduce){.loading-orbit>i{animation-duration:3s}}
+
+/* Preserve the original illustration on touch and small screens. */
+.hero-live[hidden]{display:none}.group-scene>img{image-rendering:auto}.group-scene{backface-visibility:hidden}
+@media(max-width:900px),(pointer:coarse){.hero-live{display:none!important}#hero-art{opacity:1!important;image-rendering:auto}}
