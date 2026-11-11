@@ -47,12 +47,13 @@ function videoReady(video,start=0,end=4){
  const enough=()=>{if(video.readyState<3||video.seeking)return false;const target=Math.min(end,Number.isFinite(video.duration)?video.duration:end);for(let i=0;i<video.buffered.length;i++)if(video.buffered.start(i)<=start+.12&&video.buffered.end(i)>=target-.12)return true;return false;};
  return new Promise((resolve,reject)=>{let timer;const events=['loadeddata','canplay','canplaythrough','progress','seeked','durationchange'];const clear=()=>{clearTimeout(timer);events.forEach(e=>video.removeEventListener(e,check));video.removeEventListener('error',fail);};const check=()=>{if(enough()){clear();resolve();}};const fail=()=>{clear();reject(Error('Video unavailable'));};events.forEach(e=>video.addEventListener(e,check));video.addEventListener('error',fail);timer=setTimeout(fail,25000);check();});
 }
+async function fonts(){let timer;try{await Promise.race([document.fonts.ready,new Promise(resolve=>{timer=setTimeout(()=>{if(document.fonts.status!=='loaded')document.documentElement.style.fontFamily='system-ui,sans-serif';resolve();},8000);})]);}finally{clearTimeout(timer);}}
 async function paint(name){
  const page=document.querySelector(`[data-route="${name}"]`);
  await Promise.all([...page.querySelectorAll('img[src]')].filter(im=>im.getAttribute('src')).map(im=>{im.loading='eager';return im.decode();}));
  if(name==='home')await window.MoruHome?.warm();
  window.MoruFX?.draw();window.MoruMaterials?.warm();
- await frames(3);
+ await frames(1);await fonts();await frames(2);
 }
 window.MoruLoad={image,hud,reset,progress,retry,prepare,paint,videoReady,frames,labels};
 })();
